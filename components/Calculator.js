@@ -77,6 +77,10 @@ export default function Calculator() {
       return;
     }
 
+    if (!operator) {
+      return;
+    }
+
     if (operator && !nextNumber) {
       return;
     }
@@ -143,13 +147,12 @@ export default function Calculator() {
       <div className={styles.numberPad}>
         <div className={styles.row}>
           <div
-            className={`${styles.key} ${styles.gray}`}
+            className={`${styles.key} ${styles.wide} ${styles.gray}`}
             onClick={resetCalculator}
           >
-            AC
+            <span>RESET</span>
           </div>
-          <div className={`${styles.key} ${styles.gray}`}>+/-</div>
-          <div className={`${styles.key} ${styles.gray}`}>%</div>
+          <div className={`${styles.key} ${styles.gray}`}>DEL</div>
           <div
             className={`${styles.key} ${styles.accent}`}
             onClick={() => handleOperation("divide")}
@@ -168,7 +171,9 @@ export default function Calculator() {
             9
           </div>
           <div
-            className={`${styles.key} ${styles.accent}`}
+            className={`${styles.key} ${styles.accent} ${
+              operator === "multiply" && styles.active
+            }`}
             onClick={() => handleOperation("multiply")}
           >
             x
@@ -213,7 +218,7 @@ export default function Calculator() {
             className={`${styles.key} ${styles.wide}`}
             onClick={() => addNumber(0)}
           >
-            0
+            <span>0</span>
           </div>
           <div className={styles.key}>,</div>
           <div
