@@ -143,10 +143,28 @@ export default function Calculator() {
       return;
     }
 
+    if (screenNumber && !nextNumber) {
+      let slicedNumber = String(screenNumber);
+
+      if (slicedNumber.length > 1) {
+        slicedNumber = String(screenNumber).slice(0, -1);
+        setScreenNumber(parseInt(slicedNumber));
+        return;
+      } else {
+        setScreenNumber(0);
+      }
+    }
+
     if (nextNumber) {
-      const slicedNumber = String(nextNumber).slice(-1);
-      setNextNumber(parseInt(slicedNumber));
-      return;
+      let slicedNumber = String(nextNumber);
+
+      if (slicedNumber.length > 1) {
+        slicedNumber = String(nextNumber).slice(0, -1);
+        setNextNumber(parseInt(slicedNumber));
+        return;
+      } else {
+        setNextNumber(null);
+      }
     }
   };
 
