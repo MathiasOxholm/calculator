@@ -272,7 +272,7 @@ export default function Calculator() {
           </div>
           <div className={styles.key}>,</div>
           <div
-            className={clsx(styles.key, styles.accent)}
+            className={clsx(styles.key, styles.accent, styles.sum)}
             onClick={operatorCalculation}
           >
             =
