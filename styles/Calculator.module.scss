@@ -4,10 +4,11 @@
   flex-direction: column;
   gap: 1.5rem;
   user-select: none;
-  background-color: #000000;
+  background-color: #111;
   padding: 1rem 0.75rem;
   border-radius: var(--radius-3);
   -gray-8: #333;
+  --gap: 0.75rem;
 }
 
 .next {
@@ -34,7 +35,7 @@
     white-space: nowrap;
     max-width: 100%;
     overflow-x: scroll;
-    
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -51,11 +52,11 @@
 .numberPad {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--gap);
 
   .row {
     display: flex;
-    gap: 0.75rem;
+    gap: var(--gap);
     flex: 3;
   }
 
@@ -100,13 +101,11 @@
     }
 
     &.accent {
-      color: var(--gray-1);
-      background-color: var(--orange-5);
-      border-color: var(--blue-dark);
-      text-transform: uppercase;
+      color: var(--gray-9);
+      background-color: var(--pink-3);
 
       &:hover {
-        background-color: var(--orange-4);
+        background-color: var(--pink-2);
       }
     }
   }

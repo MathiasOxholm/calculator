@@ -22,6 +22,10 @@ body {
   font-family: "Poppins", var(--font-sans);
 }
 
+body {
+  background: var(--gradient-26);
+}
+
 a {
   color: inherit;
   text-decoration: none;

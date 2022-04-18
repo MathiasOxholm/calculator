@@ -5,88 +5,88 @@ export default function Calculator() {
   const [screenNumber, setScreenNumber] = useState(0);
   const [prevNumber, setPrevNumber] = useState(null);
   const [nextNumber, setNextNumber] = useState(null);
-  const [perform, setPerform] = useState(null);
+  const [operator, setOperator] = useState(null);
   const [operatorSymbol, setOperatorSymbol] = useState(null);
 
-  const addNumbers = (number1, number2) => {
-    return number1 + number2;
+  // Calculate based on operator
+  const calculateNumbers = (number1, number2) => {
+    if (operator === "add") {
+      return number1 + number2;
+    }
+
+    if (operator === "subtract") {
+      return number1 - number2;
+    }
+
+    if (operator === "multiply") {
+      return number1 * number2;
+    }
+
+    if (operator === "divide") {
+      return number1 / number2;
+    }
   };
 
-  const multiplyNumbers = (number1, number2) => {
-    return number1 * number2;
-  };
+  const handleOperation = (string) => {
+    if (screenNumber === 0) {
+      return;
+    }
 
-  const subtractNumbers = (number1, number2) => {
-    return number1 - number2;
-  };
+    if (operator && !nextNumber) {
+      return;
+    }
 
-  const divideNumbers = (number1, number2) => {
-    return number1 / number2;
-  };
-
-  const setOperation = (string) => {
-    if (!perform) {
-      setPerform(string);
+    if (!operator) {
+      setOperator(string);
       setPrevNumber(parseInt(screenNumber));
       return;
     }
 
-    if (perform && prevNumber) {
-      setPerform(string);
-      performCalculation();
+    if (operator && prevNumber) {
+      setOperator(string);
+      operatorCalculation();
       setPrevNumber(null);
       setNextNumber(null);
       return;
     }
   };
 
+  // Update Operator symbol
   useEffect(() => {
-    if (perform === "add") {
+    if (operator === "add") {
       setOperatorSymbol("+");
       return;
     }
-    if (perform === "subtract") {
+    if (operator === "subtract") {
       setOperatorSymbol("-");
       return;
     }
-    if (perform === "multiply") {
+    if (operator === "multiply") {
       setOperatorSymbol("*");
       return;
     }
-    if (perform === "divide") {
+    if (operator === "divide") {
       setOperatorSymbol("/");
       return;
     }
-  }, [perform]);
+  }, [operator]);
 
-  const performCalculation = () => {
+  // Calculation function
+  const operatorCalculation = () => {
+    if (screenNumber === 0) {
+      return;
+    }
+
+    if (operator && !nextNumber) {
+      return;
+    }
+
     setNextNumber(null);
     setOperatorSymbol(null);
-    setPerform(null);
+    setOperator(null);
 
-    if (perform === "add") {
-      const newNumber = addNumbers(prevNumber, nextNumber);
-      setScreenNumber(parseInt(newNumber));
-      return;
-    }
-
-    if (perform === "subtract") {
-      const newNumber = subtractNumbers(prevNumber, nextNumber);
-      setScreenNumber(newNumber);
-      return;
-    }
-
-    if (perform === "multiply") {
-      const newNumber = multiplyNumbers(prevNumber, nextNumber);
-      setScreenNumber(newNumber);
-      return;
-    }
-
-    if (perform === "divide") {
-      const newNumber = divideNumbers(prevNumber, nextNumber);
-      setScreenNumber(newNumber);
-      return;
-    }
+    const newNumber = calculateNumbers(prevNumber, nextNumber);
+    setScreenNumber(parseInt(newNumber));
   };
 
   // Reset function
@@ -94,13 +94,13 @@ export default function Calculator() {
     setScreenNumber(0);
     setPrevNumber(null);
     setNextNumber(null);
-    setPerform(null);
+    setOperator(null);
     setOperatorSymbol(null);
   };
 
   const addNumber = (e) => {
     // If no operator is set
-    if (!perform) {
+    if (!operator) {
       if (screenNumber === 0) {
         setScreenNumber(e);
         return;
@@ -115,7 +115,7 @@ export default function Calculator() {
     }
 
     // If operator is set
-    if (perform) {
+    if (operator) {
       if (!nextNumber) {
         //setScreenNumber(e);
         setNextNumber(e);
@@ -152,7 +152,7 @@ export default function Calculator() {
           <div className={`${styles.key} ${styles.gray}`}>%</div>
           <div
             className={`${styles.key} ${styles.accent}`}
-            onClick={() => setOperation("divide")}
+            onClick={() => handleOperation("divide")}
           >
             /
           </div>
@@ -169,7 +169,7 @@ export default function Calculator() {
           </div>
           <div
             className={`${styles.key} ${styles.accent}`}
-            onClick={() => setOperation("multiply")}
+            onClick={() => handleOperation("multiply")}
           >
             x
           </div>
@@ -186,7 +186,7 @@ export default function Calculator() {
           </div>
           <div
             className={`${styles.key} ${styles.accent}`}
-            onClick={() => setOperation("add")}
+            onClick={() => handleOperation("add")}
           >
             +
           </div>
@@ -203,7 +203,7 @@ export default function Calculator() {
           </div>
           <div
             className={`${styles.key} ${styles.accent}`}
-            onClick={() => setOperation("subtract")}
+            onClick={() => handleOperation("subtract")}
           >
             -
           </div>
@@ -215,10 +215,10 @@ export default function Calculator() {
           >
             0
           </div>
-          <div className={styles.key}>.</div>
+          <div className={styles.key}>,</div>
           <div
             className={`${styles.key} ${styles.accent}`}
-            onClick={performCalculation}
+            onClick={operatorCalculation}
           >
             =
           </div>
