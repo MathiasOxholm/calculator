@@ -1,5 +1,7 @@
 import styles from "../styles/Calculator.module.scss";
 import { useEffect, useState } from "react";
+import clsx from "clsx";
+import next from "next";
 
 export default function Calculator() {
   const [screenNumber, setScreenNumber] = useState(0);
@@ -134,6 +136,20 @@ export default function Calculator() {
     }
   };
 
+  const deleteValues = () => {
+    if (operator && !nextNumber) {
+      setOperator(null);
+      setOperatorSymbol(null);
+      return;
+    }
+
+    if (nextNumber) {
+      const slicedNumber = String(nextNumber).slice(-1);
+      setNextNumber(parseInt(slicedNumber));
+      return;
+    }
+  };
+
   return (
     <div className={styles.Calculator}>
       <div className={styles.screen}>
@@ -152,7 +168,12 @@ export default function Calculator() {
           >
             <span>RESET</span>
           </div>
-          <div className={`${styles.key} ${styles.gray}`}>DEL</div>
+          <div
+            className={`${styles.key} ${styles.gray}`}
+            onClick={deleteValues}
+          >
+            DEL
+          </div>
           <div
             className={`${styles.key} ${styles.accent}`}
             onClick={() => handleOperation("divide")}
@@ -171,9 +192,11 @@ export default function Calculator() {
             9
           </div>
           <div
-            className={`${styles.key} ${styles.accent} ${
+            className={clsx(
+              styles.key,
+              styles.accent,
               operator === "multiply" && styles.active
-            }`}
+            )}
             onClick={() => handleOperation("multiply")}
           >
             x
@@ -190,7 +213,11 @@ export default function Calculator() {
             6
           </div>
           <div
-            className={`${styles.key} ${styles.accent}`}
+            className={clsx(
+              styles.key,
+              styles.accent,
+              operator === "add" && styles.active
+            )}
             onClick={() => handleOperation("add")}
           >
             +
@@ -207,7 +234,11 @@ export default function Calculator() {
             3
           </div>
           <div
-            className={`${styles.key} ${styles.accent}`}
+            className={clsx(
+              styles.key,
+              styles.accent,
+              operator === "subtract" && styles.active
+            )}
             onClick={() => handleOperation("subtract")}
           >
             -
@@ -222,7 +253,7 @@ export default function Calculator() {
           </div>
           <div className={styles.key}>,</div>
           <div
-            className={`${styles.key} ${styles.accent}`}
+            className={clsx(styles.key, styles.accent)}
             onClick={operatorCalculation}
           >
             =
