@@ -181,10 +181,10 @@ export default function Calculator() {
       <div className={styles.numberPad}>
         <div className={styles.row}>
           <div
-            className={`${styles.key} ${styles.wide} ${styles.gray}`}
+            className={`${styles.key} ${styles.gray}`}
             onClick={resetCalculator}
           >
-            <span>RESET</span>
+            <span>AC</span>
           </div>
           <div
             className={`${styles.key} ${styles.gray}`}
@@ -192,6 +192,7 @@ export default function Calculator() {
           >
             DEL
           </div>
+          <div className={`${styles.key} ${styles.gray}`}>%</div>
           <div
             className={`${styles.key} ${styles.accent}`}
             onClick={() => handleOperation("divide")}
