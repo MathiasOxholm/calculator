@@ -11,4 +11,4 @@ A beatutiful SPA calculator made in Next.js with create-next-app and hosted at V
 
 ## Demo
 
-- [Calculator demo](https://calculator-one-brown.vercel.app/)
+- [Calculator demo](https://calculator-mathiasoxholm.vercel.app/)
